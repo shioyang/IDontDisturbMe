@@ -12,7 +12,7 @@
 			}
 		);
 
-		chrome.runtime.sendMessage({action: "start"});
+		chrome.runtime.sendMessage({action: "start", host: location.host});
 	};
 
 	main();
