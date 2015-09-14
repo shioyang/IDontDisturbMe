@@ -1,5 +1,13 @@
 (function() {
 	main = function() {
+		chrome.webRequest.onBeforeRequest.addListener(
+			function(details) {
+				console.log("details.url: " + details.url);
+			},
+			{urls: ["<all_urls>"]},
+			["blocking"]
+		);
+
 		chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 			console.log("background!");
 			if (request.action === "start") {
