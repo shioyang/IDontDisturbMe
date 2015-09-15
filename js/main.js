@@ -1,7 +1,9 @@
-var popupApp = angular.module("popupApp", []);
+(function() {
+	var app = angular.module("popupApp", []);
 
-popupApp.controller("TestClickCtrl", function($scope) {
-	$scope.click = function() {
-		alert("Clicked!");
-	};
-});
+	app.controller("TestClickCtrl", function() {
+		this.click = function() {
+			alert("Clicked!");
+		};
+	});
+})();
