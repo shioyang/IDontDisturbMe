@@ -3,6 +3,7 @@
 		chrome.webRequest.onBeforeRequest.addListener(
 			function(details) {
 				console.log("details.url: " + details.url);
+				return {cancel: details.url.indexOf("://www.evil.com/") != -1};
 			},
 			{urls: ["<all_urls>"]},
 			["blocking"]
