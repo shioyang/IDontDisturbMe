@@ -1,7 +1,13 @@
-<html>
+<!DOCTYPE html> 
+<html ng-app="popupApp">
 	<head>
+		<script src="js/angular.min.js"></script>
+		<script src="js/main.js"></script>
 	</head>
 	<body>
 		<h1>Pop up!</h1>
+		<div ng-controller="TestClickCtrl">
+			<button ng-click="click()">Click</button>
+		</div>
 	</body>
 </html>
