@@ -1,5 +1,5 @@
 (function() {
-	var app = angular.module("popupApp", []);
+	var app = angular.module("popupApp", ["components"]);
 
 	app.controller("TestClickCtrl", function() {
 		this.click = function() {
@@ -7,3 +7,5 @@
 		};
 	});
 })();
+
+
