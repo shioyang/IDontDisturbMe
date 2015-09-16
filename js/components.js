@@ -4,8 +4,8 @@ angular.module('components', [])
 		return {
 			restrict: 'E',
 			template:
-				"<section>" +
-					"<ul class='nav nav-pills'>" +
+				"<div>" +
+					"<ul class='nav nav-tabs'>" +
 						"<li ng-class='{ active:tab.isSet(0) }'>" +
 							"<a href ng-click='tab.setTab(0)'>Time</a>" +
 						"</li>" +
@@ -31,7 +31,7 @@ angular.module('components', [])
 					"<div ng-show='tab.isSet(3)'>" +
 						"<h4>Block Log</h4>" +
 					"</div>" +
-				"</section>",
+				"</div>",
 			controller: function() {
 				this.currentTab = 0;
 
