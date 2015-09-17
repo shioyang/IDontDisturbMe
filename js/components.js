@@ -1,4 +1,4 @@
-angular.module('components', [])
+angular.module('components', ['tab-panes'])
 
 	.directive('tabs', function() {
 		return {
