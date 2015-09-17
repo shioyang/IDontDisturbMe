@@ -5,17 +5,23 @@
 			<button ng-click="listPane.addUrl()">Add</button>
 		</form>
 	</div>
-	<table class="table table-striped">
+	<div>
+		<button ng-click="listPane.removeSelectedUrl()">Remove</button>
+	</div>
+	<table class="table table-condensed">
 		<thead>
 			<tr>
 				<th>URL</th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr ng-repeat="urlInfo in listPane.urlInfos">
+			<tr ng-repeat="urlInfo in listPane.urlInfos" ng-click="listPane.setSelected(urlInfo)" ng-class="{active: listPane.selectedUrl == urlInfo}" >
 				<td>{{urlInfo.url}}</td>
 			</tr>
 		</tbody>
 	</table>
+	<div>
+		<button ng-click="listPane.removeSelectedUrl()">Remove</button>
+	</div>
 </div>
 
