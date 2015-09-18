@@ -1,14 +1,14 @@
 <div>
-	<div>
-		<form novalidate>
-			URL: <input type="text" ng-model="listPane.addedUrl" />
-			<button ng-click="listPane.addUrl()">Add</button>
+	<div style="padding:20px 0px;">
+		<form class="form-inline" novalidate>
+			<div class="form-group">
+				<label>URL:</label>
+				<input class="form-control" type="text" ng-model="listPane.addedUrl" placeholder="http://example.com/" />
+				<button class="btn" ng-click="listPane.addUrl()" ng-disabled="!listPane.addedUrl">Add</button>
+			</div>
 		</form>
 	</div>
-	<div>
-		<button ng-click="listPane.removeSelectedUrl()">Remove</button>
-	</div>
-	<table class="table table-condensed">
+	<table class="table table-condensed" style="margin-bottom:5px;">
 		<thead>
 			<tr>
 				<th>URL</th>
@@ -21,7 +21,7 @@
 		</tbody>
 	</table>
 	<div>
-		<button ng-click="listPane.removeSelectedUrl()">Remove</button>
+		<button class="btn" ng-click="listPane.removeSelectedUrl()" ng-disabled="listPane.selectedUrl == null">Remove</button>
 	</div>
 </div>
 
