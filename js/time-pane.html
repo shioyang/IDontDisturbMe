@@ -9,7 +9,7 @@
 	</div>
 	<div>
 		<button class="btn" ng-click="timePane.startTrack()" ng-disabled="timePane.startTime.hours != '--' && timePane.diffTime.hours == '--'">Start</button>
-		<button class="btn" ng-click="timePane.stopTrack()" ng-disabled="timePane.stopTime.hours == '--' && timePane.diffTime.hours != '--'">Stop</button>
+		<button class="btn" ng-click="timePane.stopTrack()" ng-disabled="timePane.startTime.hours == '--' || timePane.diffTime.hours != '--'">Stop</button>
 	</div>
 </div>
 
