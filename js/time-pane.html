@@ -1,0 +1,15 @@
+<div>
+	<div>
+		<span>{{timePane.startTime.hours}}</span>:<span>{{timePane.startTime.minutes}}</span>
+		to
+		<span>{{timePane.stopTime.hours}}</span>:<span>{{timePane.stopTime.minutes}}</span>
+	</div>
+	<div>
+		<span>{{timePane.diffTime.hours}}</span>hours
+	</div>
+	<div>
+		<button class="btn" ng-click="timePane.startTrack()" ng-disabled="timePane.startTime.hours != '--' && timePane.diffTime.hours == '--'">Start</button>
+		<button class="btn" ng-click="timePane.stopTrack()" ng-disabled="timePane.stopTime.hours == '--' && timePane.diffTime.hours != '--'">Stop</button>
+	</div>
+</div>
+

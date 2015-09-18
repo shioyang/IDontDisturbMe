@@ -36,3 +36,57 @@ angular.module('tab-panes', [])
 			controllerAs: 'listPane'
 		};
 	})
+
+	.directive('timePane', function() {
+		return {
+			restrict: 'E',
+			templateUrl: 'js/time-pane.html',
+			controller: function() {
+				this.startTime = null;
+				this.stopTime = null;
+				this.diffTime = null;
+
+
+				this.getTime = function() {
+					var d = new Date();
+					return {
+						hours: d.getHours(),
+						minutes: d.getMinutes()
+					};
+				};
+
+				this.resetTime = function() {
+					this.startTime = {
+						hours: "--",
+						minutes: "--"
+					};
+					this.stopTime = {
+						hours: "--",
+						minutes: "--"
+					};
+					this.diffTime = {
+						hours: "--",
+						minutes: "--"
+					};
+				};
+				this.resetTime();
+
+				this.startTrack = function() {
+					this.resetTime();
+					this.startTime = this.getTime();
+				};
+
+				this.stopTrack = function() {
+					this.stopTime = this.getTime();
+					this.updateDiffTime();
+				};
+				
+				this.updateDiffTime = function() {
+					this.diffTime.hours = this.stopTime.hours - this.startTime.hours;
+					this.diffTime.minutes = this.stopTime.minutes - this.startTime.minutes;
+				};
+			},
+			controllerAs: 'timePane'
+		};
+	})
+
