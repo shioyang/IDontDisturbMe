@@ -1,6 +1,7 @@
 <!DOCTYPE html> 
-<html ng-app="popupApp">
+<html ng-app="popupApp" ng-csp>
 	<head>
+		<link rel="stylesheet" type="text/css" href="js/angular-csp.css" />
 		<link rel="stylesheet" type="text/css" href="js/bootstrap.min.css" />
 		<script type="text/javascript" src="js/angular.min.js"></script>
 		<script type="text/javascript" src="js/main.js"></script>
@@ -8,7 +9,7 @@
 		<script type="text/javascript" src="js/tab-panes.js"></script>
 	</head>
 	<body>
-		<div class="container">
+		<div class="container" style="width:500px;">
 			<h1>I Don't Disturb Me</h1>
 			<tabs>
 			</tab>
