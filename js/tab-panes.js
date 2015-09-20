@@ -74,9 +74,11 @@ angular.module('tab-panes', [])
 				this.startTrack = function() {
 					this.resetTime();
 					this.startTime = this.getTime();
+					chrome.runtime.sendMessage({action: "startTrack"});
 				};
 
 				this.stopTrack = function() {
+					chrome.runtime.sendMessage({action: "stopTrack"});
 					this.stopTime = this.getTime();
 					this.updateDiffTime();
 				};
