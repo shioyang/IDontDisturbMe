@@ -1,25 +1,36 @@
 (function() {
 	main = function() {
-		chrome.webRequest.onBeforeRequest.addListener(
-			function(details) {
-				console.log("details.url: " + details.url);
-				return {cancel: true};
-//				return {cancel: details.url.indexOf("://www.evil.com/") != -1};
-			},
-			{urls: ["*://www.evil.com/*"]},  // "*://host/*"
-//			{urls: ["<all_urls>"]},  // "*://host/*"
-			["blocking"]
-		);
+		this.logDebug = function(msg) {
+			console.log("[background] " + msg);
+		};
+
+		// A handler to handle BeforeRequest
+		this.requestBlockFunction = function(details) {
+			this.logDebug("Blocked URL: " + details.url);
+			return {cancel: true};
+		};
+
+		// host: "www.google.com", etc.
+		this.formatUrl = function(host) {
+			return "*://" + host + "/*";
+		};
 
 		chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-			console.log("background!");
 			if (request.action) {
 				switch (request.action) {
 					case "startTrack":
-						console.log("startTrack");
+						this.logDebug("startTrack");
+						chrome.webRequest.onBeforeRequest.addListener(
+							this.requestBlockFunction,
+							{urls: ["*://www.evil.com/*"]},  // "*://host/*"
+							["blocking"]
+						);
 						break;
 					case "stopTrack":
-						console.log("stopTrack");
+						this.logDebug("stopTrack");
+						chrome.webRequest.onBeforeRequest.removeListener(
+							this.requestBlockFunction
+						);
 						break;
 					case "start":
 						chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
