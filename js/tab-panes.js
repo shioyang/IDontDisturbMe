@@ -41,7 +41,7 @@ angular.module('tab-panes', [])
 		return {
 			restrict: 'E',
 			templateUrl: 'js/time-pane.html',
-			controller: function() {
+			controller: function($scope) {
 				this.KEY_START_TIME = "key_startTime";
 				this.KEY_STOP_TIME = "key_stopTime";
 				this.KEY_DIFF_TIME = "key_diffTime";
@@ -61,21 +61,26 @@ angular.module('tab-panes', [])
 
 				this.loadTimes = function() {
 					console.log("loadTimes");
-					this.loadItem(this.KEY_START_TIME, this.startTime);
-					this.loadItem(this.KEY_STOP_TIME, this.stopTime);
-					this.loadItem(this.KEY_DIFF_TIME, this.diffTime);
-//					this.startTime = this.loadItem(this.KEY_START_TIME);
-//					this.stopTime = this.loadItem(this.KEY_STOP_TIME);
-//					this.diffTime = this.loadItem(this.KEY_DIFF_TIME);
-//					console.log(this.startTime);
+					this.loadItem([this.KEY_START_TIME, this.KEY_STOP_TIME, this.KEY_DIFF_TIME], ["startTime", "stopTime", "diffTime"]);
 				};
-				this.loadItem = function(key, store) {
-					chrome.storage.sync.get(key, function(item) {
-						console.log("loaded: key " + key + " item " + "item");
-						store =  (item != null) ? angular.fromJson(item) : { hours: "--", minutes: "--" };
+				this.loadItem = function(keys, stores) {
+					var t = this;
+					chrome.storage.sync.get(keys, function(items) {
+						// Use "$apply" because angular doesn't know this turn.
+						$scope.$apply(function() {
+							console.log("loaded: keys");
+							console.log(keys);
+							console.log("        items");
+							console.log(items);
+							angular.forEach(items, function(item, key) {
+								var store = stores[keys.indexOf(key)];
+								t[store] =  (item != null) ? angular.fromJson(item) : { hours: "--", minutes: "--" };
+								console.log("        store");
+								console.log(store);
+								console.log(t[store]);
+							});
+						});
 					});
-//					var str = sessionStorage.getItem(key);
-//					return str != null ? angular.fromJson(str) : { hours: "--", minutes: "--" };
 				};
 
 
@@ -88,9 +93,9 @@ angular.module('tab-panes', [])
 					var object = {};
 					object[key] = stringValue;
 					chrome.storage.sync.set(object, function() {
-						console.log("saved: " + object);
+						console.log("saved:");
+						console.log(object);
 					});
-//					sessionStorage.setItem(key, stringValue);
 				};
 
 				this.resetTime = function() {
