@@ -85,13 +85,17 @@ angular.module('tab-panes', [])
 
 
 				this.saveTimes = function() {
-					this.saveItem(this.KEY_START_TIME, angular.toJson(this.startTime));
-					this.saveItem(this.KEY_STOP_TIME, angular.toJson(this.stopTime));
-					this.saveItem(this.KEY_DIFF_TIME, angular.toJson(this.diffTime));
+					this.saveItem(
+						[this.KEY_START_TIME, this.KEY_STOP_TIME, this.KEY_DIFF_TIME],
+						[angular.toJson(this.startTime), angular.toJson(this.stopTime), angular.toJson(this.diffTime)]
+					);
 				};
-				this.saveItem = function(key, stringValue) {
+				this.saveItem = function(keys, stringValues) {
 					var object = {};
-					object[key] = stringValue;
+					angular.forEach(keys, function(key) {
+						var value = stringValues[keys.indexOf(key)];
+						object[key] = value;
+					});
 					chrome.storage.sync.set(object, function() {
 						console.log("saved:");
 						console.log(object);
