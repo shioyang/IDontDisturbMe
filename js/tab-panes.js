@@ -42,6 +42,10 @@ angular.module('tab-panes', [])
 			restrict: 'E',
 			templateUrl: 'js/time-pane.html',
 			controller: function() {
+				this.KEY_START_TIME = "key_startTime";
+				this.KEY_STOP_TIME = "key_stopTime";
+				this.KEY_DIFF_TIME = "key_diffTime";
+
 				this.startTime = null;
 				this.stopTime = null;
 				this.diffTime = null;
@@ -53,6 +57,28 @@ angular.module('tab-panes', [])
 						hours: d.getHours(),
 						minutes: d.getMinutes()
 					};
+				};
+
+				this.loadTimes = function() {
+					console.log("loadTimes");
+					this.startTime = this.loadItem(this.KEY_START_TIME);
+					this.stopTime = this.loadItem(this.KEY_STOP_TIME);
+					this.diffTime = this.loadItem(this.KEY_DIFF_TIME);
+					console.log(this.startTime);
+				};
+				this.loadItem = function(key) {
+					var str = sessionStorage.getItem(key);
+					return str != null ? angular.fromJson(str) : { hours: "--", minutes: "--" };
+				};
+
+
+				this.saveTimes = function() {
+					this.saveItem(this.KEY_START_TIME, angular.toJson(this.startTime));
+					this.saveItem(this.KEY_STOP_TIME, angular.toJson(this.stopTime));
+					this.saveItem(this.KEY_DIFF_TIME, angular.toJson(this.diffTime));
+				};
+				this.saveItem = function(key, stringValue) {
+					sessionStorage.setItem(key, stringValue);
 				};
 
 				this.resetTime = function() {
@@ -69,24 +95,28 @@ angular.module('tab-panes', [])
 						minutes: "--"
 					};
 				};
-				this.resetTime();
 
 				this.startTrack = function() {
 					this.resetTime();
 					this.startTime = this.getTime();
 					chrome.runtime.sendMessage({action: "startTrack"});
+					this.saveTimes();
 				};
 
 				this.stopTrack = function() {
 					chrome.runtime.sendMessage({action: "stopTrack"});
 					this.stopTime = this.getTime();
 					this.updateDiffTime();
+					this.saveTimes();
 				};
 				
 				this.updateDiffTime = function() {
 					this.diffTime.hours = this.stopTime.hours - this.startTime.hours;
 					this.diffTime.minutes = this.stopTime.minutes - this.startTime.minutes;
 				};
+
+				// init
+				this.loadTimes();
 			},
 			controllerAs: 'timePane'
 		};
