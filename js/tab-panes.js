@@ -61,14 +61,21 @@ angular.module('tab-panes', [])
 
 				this.loadTimes = function() {
 					console.log("loadTimes");
-					this.startTime = this.loadItem(this.KEY_START_TIME);
-					this.stopTime = this.loadItem(this.KEY_STOP_TIME);
-					this.diffTime = this.loadItem(this.KEY_DIFF_TIME);
-					console.log(this.startTime);
+					this.loadItem(this.KEY_START_TIME, this.startTime);
+					this.loadItem(this.KEY_STOP_TIME, this.stopTime);
+					this.loadItem(this.KEY_DIFF_TIME, this.diffTime);
+//					this.startTime = this.loadItem(this.KEY_START_TIME);
+//					this.stopTime = this.loadItem(this.KEY_STOP_TIME);
+//					this.diffTime = this.loadItem(this.KEY_DIFF_TIME);
+//					console.log(this.startTime);
 				};
-				this.loadItem = function(key) {
-					var str = sessionStorage.getItem(key);
-					return str != null ? angular.fromJson(str) : { hours: "--", minutes: "--" };
+				this.loadItem = function(key, store) {
+					chrome.storage.sync.get(key, function(item) {
+						console.log("loaded: key " + key + " item " + "item");
+						store =  (item != null) ? angular.fromJson(item) : { hours: "--", minutes: "--" };
+					});
+//					var str = sessionStorage.getItem(key);
+//					return str != null ? angular.fromJson(str) : { hours: "--", minutes: "--" };
 				};
 
 
@@ -78,7 +85,12 @@ angular.module('tab-panes', [])
 					this.saveItem(this.KEY_DIFF_TIME, angular.toJson(this.diffTime));
 				};
 				this.saveItem = function(key, stringValue) {
-					sessionStorage.setItem(key, stringValue);
+					var object = {};
+					object[key] = stringValue;
+					chrome.storage.sync.set(object, function() {
+						console.log("saved: " + object);
+					});
+//					sessionStorage.setItem(key, stringValue);
 				};
 
 				this.resetTime = function() {
