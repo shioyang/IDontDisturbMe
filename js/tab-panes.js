@@ -1,10 +1,12 @@
-angular.module('tab-panes', [])
+angular.module('tab-panes', ['util-services'])
 
 	.directive('listPane', function() {
 		return {
 			restrict: 'E',
 			templateUrl: 'js/list-pane.html',
-			controller: function() {
+			controller: function($scope) {
+				this.KEY_URL_INFOS = "key_urlInfos";
+
 				this.urlInfos = [
 					{ url: 'http://evel01.url/' },
 					{ url: 'http://evel02.url/' },
@@ -12,6 +14,10 @@ angular.module('tab-panes', [])
 				];
 
 				this.selectedUrl = null;
+
+//				this.loadUrls = function() {
+//					this.loadItem();
+//				};
 
 				this.addUrl = function() {
 					console.log(this.addedUrl);
@@ -41,7 +47,7 @@ angular.module('tab-panes', [])
 		return {
 			restrict: 'E',
 			templateUrl: 'js/time-pane.html',
-			controller: function($scope) {
+			controller: ['$scope', 'StoreItemFactory', function($scope, StoreItemFactory) {
 				this.KEY_START_TIME = "key_startTime";
 				this.KEY_STOP_TIME = "key_stopTime";
 				this.KEY_DIFF_TIME = "key_diffTime";
@@ -61,28 +67,9 @@ angular.module('tab-panes', [])
 
 				this.loadTimes = function() {
 					console.log("loadTimes");
-					this.loadItem([this.KEY_START_TIME, this.KEY_STOP_TIME, this.KEY_DIFF_TIME], ["startTime", "stopTime", "diffTime"]);
+					StoreItemFactory.loadItem([this.KEY_START_TIME, this.KEY_STOP_TIME, this.KEY_DIFF_TIME], ["startTime", "stopTime", "diffTime"],
+						{ hours: "--", minutes: "--" }, $scope, this);
 				};
-				this.loadItem = function(keys, stores) {
-					var t = this;
-					chrome.storage.sync.get(keys, function(items) {
-						// Use "$apply" because angular doesn't know this turn.
-						$scope.$apply(function() {
-							console.log("loaded: keys");
-							console.log(keys);
-							console.log("        items");
-							console.log(items);
-							angular.forEach(items, function(item, key) {
-								var store = stores[keys.indexOf(key)];
-								t[store] =  (item != null) ? angular.fromJson(item) : { hours: "--", minutes: "--" };
-								console.log("        store");
-								console.log(store);
-								console.log(t[store]);
-							});
-						});
-					});
-				};
-
 
 				this.saveTimes = function() {
 					this.saveItem(
@@ -138,7 +125,7 @@ angular.module('tab-panes', [])
 
 				// init
 				this.loadTimes();
-			},
+			}],
 			controllerAs: 'timePane'
 		};
 	})
