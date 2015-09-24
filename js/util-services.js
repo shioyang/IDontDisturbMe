@@ -2,6 +2,9 @@ angular.module('util-services', [])
 
 	.factory('StoreItemFactory', function() {
 		return {
+			/*
+			 * loadItem
+			 */
 			loadItem: function(keys, stores, default_value, scope, that) {
 				chrome.storage.sync.get(keys, function(items) {
 					// Use "$apply" because angular doesn't know this turn.
@@ -18,6 +21,21 @@ angular.module('util-services', [])
 							console.log(that[store]);
 						});
 					});
+				});
+			},
+
+			/*
+			 * saveItem
+			 */
+			saveItem: function(keys, stringValues) {
+				var object = {};
+				angular.forEach(keys, function(key) {
+					var value = stringValues[keys.indexOf(key)];
+					object[key] = value;
+				});
+				chrome.storage.sync.set(object, function() {
+					console.log("saved:");
+					console.log(object);
 				});
 			}
 		};
