@@ -4,24 +4,25 @@ angular.module('tab-panes', ['util-services'])
 		return {
 			restrict: 'E',
 			templateUrl: 'js/list-pane.html',
-			controller: function($scope) {
+			controller: ['$scope', 'StoreItemFactory', function($scope, StoreItemFactory) {
 				this.KEY_URL_INFOS = "key_urlInfos";
 
-				this.urlInfos = [
-					{ url: 'http://evel01.url/' },
-					{ url: 'http://evel02.url/' },
-					{ url: 'http://evel03.url/' }
-				];
+				this.urlInfos = [];
 
 				this.selectedUrl = null;
 
-//				this.loadUrls = function() {
-//					this.loadItem();
-//				};
+				this.loadUrls = function() {
+					StoreItemFactory.loadItem([this.KEY_URL_INFOS], ["urlInfos"], [], $scope, this);
+				};
+
+				this.saveUrls = function() {
+					StoreItemFactory.saveItem([this.KEY_URL_INFOS], [angular.toJson(this.urlInfos)]);
+				};
 
 				this.addUrl = function() {
 					console.log(this.addedUrl);
 					this.urlInfos.push({ url: this.addedUrl });
+					this.saveUrls();
 					this.addedUrl = ""; //clear
 				};
 
@@ -36,9 +37,13 @@ angular.module('tab-panes', ['util-services'])
 							this.urlInfos.splice(index, 1);
 							this.selectedUrl = null;
 						}
+						this.saveUrls();
 					}
 				};
-			},
+
+				// init
+				this.loadUrls();
+			}],
 			controllerAs: 'listPane'
 		};
 	})
@@ -66,9 +71,8 @@ angular.module('tab-panes', ['util-services'])
 				};
 
 				this.loadTimes = function() {
-					console.log("loadTimes");
-					StoreItemFactory.loadItem([this.KEY_START_TIME, this.KEY_STOP_TIME, this.KEY_DIFF_TIME], ["startTime", "stopTime", "diffTime"],
-						{ hours: "--", minutes: "--" }, $scope, this);
+					StoreItemFactory.loadItem([this.KEY_START_TIME, this.KEY_STOP_TIME, this.KEY_DIFF_TIME],
+						["startTime", "stopTime", "diffTime"], { hours: "--", minutes: "--" }, $scope, this);
 				};
 
 				this.saveTimes = function() {
