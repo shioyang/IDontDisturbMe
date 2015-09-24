@@ -71,6 +71,7 @@ angular.module('tab-panes', ['util-services'])
 				};
 
 				this.loadTimes = function() {
+					var t = this;
 					StoreItemFactory.loadItem([this.KEY_START_TIME, this.KEY_STOP_TIME, this.KEY_DIFF_TIME],
 						["startTime", "stopTime", "diffTime"], { hours: "--", minutes: "--" }, $scope, this);
 				};

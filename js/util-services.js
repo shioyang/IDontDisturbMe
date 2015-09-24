@@ -5,7 +5,7 @@ angular.module('util-services', [])
 			/*
 			 * loadItem
 			 */
-			loadItem: function(keys, stores, default_value, scope, that) {
+			loadItem: function(keys, stores, default_value, scope, that, callback) {
 				chrome.storage.sync.get(keys, function(items) {
 					// Use "$apply" because angular doesn't know this turn.
 					scope.$apply(function() {
@@ -23,6 +23,8 @@ angular.module('util-services', [])
 							console.log(that[store]);
 						});
 						console.log("===");
+						if (callback)
+							callback();
 					});
 				});
 			},
