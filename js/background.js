@@ -4,15 +4,18 @@
 			console.log("[background] " + msg);
 		};
 
+		this.KEY_URL_INFOS = "key_urlInfos";
+
 		// A handler to handle BeforeRequest
 		this.requestBlockFunction = function(details) {
 			this.logDebug("Blocked URL: " + details.url);
 			return {cancel: true};
 		};
 
-		// host: "www.google.com", etc.
-		this.formatUrl = function(host) {
-			return "*://" + host + "/*";
+		// url: "http://www.google.com/", etc.
+		this.formatUrl = function(url) {
+			var re = /^https?:\/\/([\w.]+)\/.*/;
+			return url.replace(re, "*://$1/*");
 		};
 
 		chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
@@ -20,17 +23,36 @@
 				switch (request.action) {
 					case "startTrack":
 						this.logDebug("startTrack");
-						chrome.webRequest.onBeforeRequest.addListener(
-							this.requestBlockFunction,
-							{urls: ["*://www.evil.com/*"]},  // "*://host/*"
-							["blocking"]
-						);
+						var key = this.KEY_URL_INFOS;
+						var formatUrl = this.formatUrl;
+						var requestBlockFunction = this.requestBlockFunction;
+						chrome.storage.sync.get(key, function(items) {
+							var urlInfos = JSON.parse(items[key]);
+							var urls = [];
+							urlInfos.forEach(function(urlInfo, index) {
+								urls.push(formatUrl(urlInfo.url));  // "*://host/*"
+							}, this);
+
+							if (urls.length > 0) {
+								chrome.webRequest.onBeforeRequest.addListener(
+									requestBlockFunction,
+									{urls: urls},  // "*://host/*"
+									["blocking"]
+								);
+							}
+						});
 						break;
 					case "stopTrack":
 						this.logDebug("stopTrack");
 						chrome.webRequest.onBeforeRequest.removeListener(
 							this.requestBlockFunction
 						);
+						break;
+					case "restartTrack":
+						this.logDebug("restartTrack");
+						this.logDebug("   !!! under implementation !!!");
+						// stopTrack
+						// startTrack
 						break;
 					case "start":
 						chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {

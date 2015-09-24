@@ -100,12 +100,14 @@ angular.module('tab-panes', ['util-services'])
 				this.startTrack = function() {
 					this.resetTime();
 					this.startTime = this.getTime();
-					chrome.runtime.sendMessage({action: "startTrack"});
 					this.saveTimes();
+
+					chrome.runtime.sendMessage({action: "startTrack", urls: []});
 				};
 
 				this.stopTrack = function() {
 					chrome.runtime.sendMessage({action: "stopTrack"});
+
 					this.stopTime = this.getTime();
 					this.updateDiffTime();
 					this.saveTimes();
