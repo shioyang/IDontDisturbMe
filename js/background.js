@@ -13,6 +13,7 @@
 		};
 
 		// url: "http://www.google.com/", etc.
+		//  ->> "*://www.google.com/*", etc.
 		this.formatUrl = function(url) {
 			var re = /^https?:\/\/([\w.]+)\/.*/;
 			return url.replace(re, "*://$1/*");
