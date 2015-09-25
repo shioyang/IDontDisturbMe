@@ -21,7 +21,7 @@ angular.module('tab-panes', ['util-services'])
 
 				this.addUrl = function() {
 					console.log(this.addedUrl);
-					this.urlInfos.push({ url: this.addedUrl });
+					this.urlInfos.push({ url: this.addedUrl, blocked: 0 });
 					this.saveUrls();
 					this.addedUrl = ""; //clear
 				};

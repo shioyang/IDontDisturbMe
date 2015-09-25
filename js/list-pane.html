@@ -13,10 +13,14 @@
 			<tr>
 				<th>URL</th>
 			</tr>
+			<tr>
+				<th>Blocked</th>
+			</tr>
 		</thead>
 		<tbody>
 			<tr ng-repeat="urlInfo in listPane.urlInfos" ng-click="listPane.setSelected(urlInfo)" ng-class="{active: listPane.selectedUrl == urlInfo}" >
 				<td>{{urlInfo.url}}</td>
+				<td>{{urlInfo.blocked}}</td>
 			</tr>
 		</tbody>
 	</table>
