@@ -3,7 +3,11 @@
 	"name": "I Don't Disturb Me",
 	"description": "This extension tracks when your activity starts and stops. In addition, during the activity, Site blocker is enabled.",
 	"version": "1.0",
-	"icons": {},
+	"icons": {
+		"16": "images/icons/icon01_16x16.png",
+		"48": "images/icons/icon01_48x48.png",
+		"128": "images/icons/icon01_128x128.png"
+	},
 	"background": {
 		"scripts": [
 			"js/background.js"
