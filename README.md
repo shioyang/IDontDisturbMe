@@ -3,7 +3,9 @@
 This chrome extension tracks when your activity starts and stops. In addition, during the activity, Site blocker is enabled.
 
 ## How to Install
-Download "IDontDisturbMe.crx" and drag and drop it to your Chrome browser.
+~~Download "IDontDisturbMe.crx" and drag and drop it to your Chrome browser.~~
+
+Download source codes to local. In your chrome browser, and use "developer mode" to load the extension from local files.
 
 ## How to Use
 ### Blocking URLs
