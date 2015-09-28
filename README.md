@@ -5,7 +5,8 @@ This chrome extension tracks when your activity starts and stops. In addition, d
 ## How to Install
 ~~Download "IDontDisturbMe.crx" and drag and drop it to your Chrome browser.~~
 
-Download source codes to local. In your chrome browser, and use "developer mode" to load the extension from local files.
+Download source codes to local. In your chrome browser, and use "developer mode" to load the extension from local files. (You can set "developer mode" off after loading the extension.)
+Note: Every time you open Chrome browser, the warning pop-up shows because the extension is loaded from local files.
 
 ## How to Use
 ### Blocking URLs
