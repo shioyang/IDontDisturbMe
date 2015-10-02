@@ -15,6 +15,9 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
+		// This loading order is important.
+      'extension/js/angular.min.js',
+	  'ut/angular-mocks/angular-mocks.js',
       'extension/js/*.js',
       'ut/*.js'
     ],
