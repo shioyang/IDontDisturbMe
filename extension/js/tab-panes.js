@@ -1,49 +1,52 @@
 angular.module('tab-panes', ['util-services'])
 
+	.controller('ListPaneCtrler', ['$scope', 'StoreItemFactory', function($scope, StoreItemFactory) {
+		this.KEY_URL_INFOS = "key_urlInfos";
+
+		this.urlInfos = [];
+
+		this.selectedUrl = null;
+
+		this.loadUrls = function() {
+			StoreItemFactory.loadItem([this.KEY_URL_INFOS], ["urlInfos"], [], $scope, this);
+		};
+
+		this.saveUrls = function() {
+			StoreItemFactory.saveItem([this.KEY_URL_INFOS], [angular.toJson(this.urlInfos)]);
+		};
+
+		this.addUrl = function() {
+			console.log(this.addedUrl);
+			this.urlInfos.push({ url: this.addedUrl, blocked: 0 });
+			this.saveUrls();
+			this.addedUrl = ""; //clear
+		};
+
+		this.setSelected = function(url) {
+			this.selectedUrl = url;
+		};
+
+		this.removeSelectedUrl = function() {
+			if (this.selectedUrl != null) {
+				var index = this.urlInfos.indexOf(this.selectedUrl);
+				if (0 <= index) {
+					this.urlInfos.splice(index, 1);
+					this.selectedUrl = null;
+				}
+				this.saveUrls();
+			}
+		};
+
+		// init
+		this.loadUrls();
+	}]
+	)
+
 	.directive('listPane', function() {
 		return {
 			restrict: 'E',
 			templateUrl: 'js/list-pane.html',
-			controller: ['$scope', 'StoreItemFactory', function($scope, StoreItemFactory) {
-				this.KEY_URL_INFOS = "key_urlInfos";
-
-				this.urlInfos = [];
-
-				this.selectedUrl = null;
-
-				this.loadUrls = function() {
-					StoreItemFactory.loadItem([this.KEY_URL_INFOS], ["urlInfos"], [], $scope, this);
-				};
-
-				this.saveUrls = function() {
-					StoreItemFactory.saveItem([this.KEY_URL_INFOS], [angular.toJson(this.urlInfos)]);
-				};
-
-				this.addUrl = function() {
-					console.log(this.addedUrl);
-					this.urlInfos.push({ url: this.addedUrl, blocked: 0 });
-					this.saveUrls();
-					this.addedUrl = ""; //clear
-				};
-
-				this.setSelected = function(url) {
-					this.selectedUrl = url;
-				};
-
-				this.removeSelectedUrl = function() {
-					if (this.selectedUrl != null) {
-						var index = this.urlInfos.indexOf(this.selectedUrl);
-						if (0 <= index) {
-							this.urlInfos.splice(index, 1);
-							this.selectedUrl = null;
-						}
-						this.saveUrls();
-					}
-				};
-
-				// init
-				this.loadUrls();
-			}],
+			controller: 'ListPaneCtrler',
 			controllerAs: 'listPane'
 		};
 	})
