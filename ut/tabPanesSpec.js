@@ -1,4 +1,4 @@
-describe('tab-panes', function() {
+describe('tab-panes ListPaneCtrler', function() {
 	var $rootScope;
 	var $controller;
 	beforeEach(module('popupApp'));
@@ -18,20 +18,10 @@ describe('tab-panes', function() {
 								{"url":"http://news.google.co.jp/","blocked":0}
 							]
 					};
-//					console.log("===");
-//					console.log("Loaded:");
-//					console.log("keys");
-//					console.log(keys);
-//					console.log("items");
-//					console.log(items);
 					angular.forEach(items, function(item, key) {
 						var store = stores[keys.indexOf(key)];
 						that[store] =  (item != null) ? angular.fromJson(item) : default_value;
-//						console.log("store");
-//						console.log(store);
-//						console.log(that[store]);
 					});
-//					console.log("===");
 					if (callback)
 						callback();
 				});
@@ -41,38 +31,45 @@ describe('tab-panes', function() {
 			 * saveItem
 			 */
 			saveItem: function(keys, stringValues) {
-//				console.log("===");
-//				console.log("saved");
-//				console.log("keys:");
-//				console.log(keys);
-//				console.log("stringValues:");
-//				console.log(stringValues);
-//				console.log("===");
 			}
 		};
 	};
 
-	it('controller', function() {
+	it('should load URL info.', function() {
 		var listPaneCtrler = $controller('ListPaneCtrler', { $scope: $rootScope, StoreItemFactory: StoreItemFactoryMock() });
 		listPaneCtrler.loadUrls();
 		expect( listPaneCtrler.urlInfos[0].url ).toEqual("http://www.youtube.com/");
 		expect( listPaneCtrler.urlInfos[1].blocked ).toEqual(0);
 	});
 
-});
+//	it('should save URL info.', function() {
+//	});
 
-describe('Hello Directive', function() {
-	var $compile;
-	var $rootScope;
-	beforeEach(module('popupApp'));
-	beforeEach(inject(function(_$compile_, _$rootScope_) {
-		$compile = _$compile_;
-		$rootScope = _$rootScope_;
-	}));
-
-	it('Compile tabs directive', function() {
-		var element = $compile("<tabs></tabs>")($rootScope);
-//		$rootScope.$digest();
-//		expect(element.html()).toContain("...");
+	it('should add a new URL info.', function() {
+		var listPaneCtrler = $controller('ListPaneCtrler', { $scope: $rootScope, StoreItemFactory: StoreItemFactoryMock() });
+		var testUrl = "http://www.new.url/";
+		listPaneCtrler.addedUrl = testUrl;
+		listPaneCtrler.addUrl();
+		expect( listPaneCtrler.urlInfos[listPaneCtrler.urlInfos.length - 1].url ).toEqual(testUrl);
+		expect( listPaneCtrler.urlInfos[listPaneCtrler.urlInfos.length - 1].blocked ).toEqual(0);
 	});
+
+	it('should set a URL as selected.', function() {
+		var ctrl = $controller('ListPaneCtrler', { $scope: $rootScope, StoreItemFactory: StoreItemFactoryMock() });
+		var testUrl = ctrl.urlInfos[0];
+		ctrl.setSelected(testUrl);
+		expect( ctrl.selectedUrl ).toEqual(testUrl);
+	});
+
+	it('should remove a selected URL.', function() {
+		var ctrl = $controller('ListPaneCtrler', { $scope: $rootScope, StoreItemFactory: StoreItemFactoryMock() });
+		var testUrl = ctrl.urlInfos[0];
+		ctrl.setSelected(testUrl);
+		ctrl.removeSelectedUrl();
+		angular.forEach(ctrl.urlInfos, function(urlInfo) {
+			expect( urlInfo.url ).not.toEqual(testUrl);
+		});
+	});
+
 });
+
