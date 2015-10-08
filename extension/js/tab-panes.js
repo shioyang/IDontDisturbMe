@@ -39,8 +39,78 @@ angular.module('tab-panes', ['util-services'])
 
 		// init
 		this.loadUrls();
-	}]
-	)
+	}])
+	
+	.controller('TimePaneCtrler', ['$scope', 'StoreItemFactory', function($scope, StoreItemFactory) {
+		this.KEY_START_TIME = "key_startTime";
+		this.KEY_STOP_TIME = "key_stopTime";
+		this.KEY_DIFF_TIME = "key_diffTime";
+
+		this.startTime = null;
+		this.stopTime = null;
+		this.diffTime = null;
+
+
+		this.getTime = function() {
+			var d = new Date();
+			return {
+				hours: d.getHours(),
+				minutes: d.getMinutes()
+			};
+		};
+
+		this.loadTimes = function() {
+			var t = this;
+			StoreItemFactory.loadItem([this.KEY_START_TIME, this.KEY_STOP_TIME, this.KEY_DIFF_TIME],
+				["startTime", "stopTime", "diffTime"], { hours: "--", minutes: "--" }, $scope, this);
+		};
+
+		this.saveTimes = function() {
+			StoreItemFactory.saveItem(
+				[this.KEY_START_TIME, this.KEY_STOP_TIME, this.KEY_DIFF_TIME],
+				[angular.toJson(this.startTime), angular.toJson(this.stopTime), angular.toJson(this.diffTime)]
+			);
+		};
+
+		this.resetTime = function() {
+			this.startTime = {
+				hours: "--",
+				minutes: "--"
+			};
+			this.stopTime = {
+				hours: "--",
+				minutes: "--"
+			};
+			this.diffTime = {
+				hours: "--",
+				minutes: "--"
+			};
+		};
+
+		this.startTrack = function() {
+			this.resetTime();
+			this.startTime = this.getTime();
+			this.saveTimes();
+
+			chrome.runtime.sendMessage({action: "startTrack", urls: []});
+		};
+
+		this.stopTrack = function() {
+			chrome.runtime.sendMessage({action: "stopTrack"});
+
+			this.stopTime = this.getTime();
+			this.updateDiffTime();
+			this.saveTimes();
+		};
+		
+		this.updateDiffTime = function() {
+			this.diffTime.hours = this.stopTime.hours - this.startTime.hours;
+			this.diffTime.minutes = this.stopTime.minutes - this.startTime.minutes;
+		};
+
+		// init
+		this.loadTimes();
+	}])
 
 	.directive('listPane', function() {
 		return {
@@ -55,76 +125,7 @@ angular.module('tab-panes', ['util-services'])
 		return {
 			restrict: 'E',
 			templateUrl: 'js/time-pane.html',
-			controller: ['$scope', 'StoreItemFactory', function($scope, StoreItemFactory) {
-				this.KEY_START_TIME = "key_startTime";
-				this.KEY_STOP_TIME = "key_stopTime";
-				this.KEY_DIFF_TIME = "key_diffTime";
-
-				this.startTime = null;
-				this.stopTime = null;
-				this.diffTime = null;
-
-
-				this.getTime = function() {
-					var d = new Date();
-					return {
-						hours: d.getHours(),
-						minutes: d.getMinutes()
-					};
-				};
-
-				this.loadTimes = function() {
-					var t = this;
-					StoreItemFactory.loadItem([this.KEY_START_TIME, this.KEY_STOP_TIME, this.KEY_DIFF_TIME],
-						["startTime", "stopTime", "diffTime"], { hours: "--", minutes: "--" }, $scope, this);
-				};
-
-				this.saveTimes = function() {
-					StoreItemFactory.saveItem(
-						[this.KEY_START_TIME, this.KEY_STOP_TIME, this.KEY_DIFF_TIME],
-						[angular.toJson(this.startTime), angular.toJson(this.stopTime), angular.toJson(this.diffTime)]
-					);
-				};
-
-				this.resetTime = function() {
-					this.startTime = {
-						hours: "--",
-						minutes: "--"
-					};
-					this.stopTime = {
-						hours: "--",
-						minutes: "--"
-					};
-					this.diffTime = {
-						hours: "--",
-						minutes: "--"
-					};
-				};
-
-				this.startTrack = function() {
-					this.resetTime();
-					this.startTime = this.getTime();
-					this.saveTimes();
-
-					chrome.runtime.sendMessage({action: "startTrack", urls: []});
-				};
-
-				this.stopTrack = function() {
-					chrome.runtime.sendMessage({action: "stopTrack"});
-
-					this.stopTime = this.getTime();
-					this.updateDiffTime();
-					this.saveTimes();
-				};
-				
-				this.updateDiffTime = function() {
-					this.diffTime.hours = this.stopTime.hours - this.startTime.hours;
-					this.diffTime.minutes = this.stopTime.minutes - this.startTime.minutes;
-				};
-
-				// init
-				this.loadTimes();
-			}],
+			controller: 'TimePaneCtrler',
 			controllerAs: 'timePane'
 		};
 	})
