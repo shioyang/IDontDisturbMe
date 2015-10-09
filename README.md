@@ -9,15 +9,16 @@ Download source codes to local. In your chrome browser, and use "developer mode"
 Note: Every time you open Chrome browser, the warning pop-up shows because the extension is loaded from local files.
 
 ## How to Use
-### Blocking URLs
+### Register Blocked URLs
 1. Click the icon for this extension to open the pop-up window: ![Icon on browser](images/captures/iconOnBrowser.png)
 2. Go to "List" tab.
 3. Add URLs which you want this extension to block: ![List tab](images/captures/ListTab.png)
 
-### Tracking Start
+### Start Tracking
 1. Click the icon for this extension to open the pop-up window: ![Icon on browser](images/captures/iconOnBrowser.png)
 2. Click the "Start" button to start tracking and blocking configured URLs: ![Start tracking in Time tab](images/captures/TimeTab_starting.png)
 
-### Tracking Stop
+### Stop Tracking
 1. Click the icon for this extension to open the pop-up window: ![Icon on browser](images/captures/iconOnBrowser.png)
 2. Click the "Stop" button to stop tracking and blocking configured URLs.
+
