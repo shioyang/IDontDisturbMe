@@ -42,8 +42,10 @@ describe('tab-panes ListPaneCtrler', function() {
 		expect( listPaneCtrler.urlInfos[1].blocked ).toEqual(0);
 	});
 
-//	it('should save URL info.', function() {
-//	});
+	it('should save URL info.', function() {
+		var listPaneCtrler = $controller('ListPaneCtrler', { $scope: $rootScope, StoreItemFactory: StoreItemFactoryMock() });
+		listPaneCtrler.saveUrls();
+	});
 
 	it('should add a new URL info.', function() {
 		var listPaneCtrler = $controller('ListPaneCtrler', { $scope: $rootScope, StoreItemFactory: StoreItemFactoryMock() });

@@ -72,7 +72,7 @@ angular.module('tab-panes', ['util-services'])
 			);
 		};
 
-		this.resetTime = function() {
+		this.resetTimes = function() {
 			this.startTime = {
 				hours: "--",
 				minutes: "--"
@@ -88,7 +88,7 @@ angular.module('tab-panes', ['util-services'])
 		};
 
 		this.startTrack = function() {
-			this.resetTime();
+			this.resetTimes();
 			this.startTime = this.getTime();
 			this.saveTimes();
 
