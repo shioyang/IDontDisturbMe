@@ -112,6 +112,9 @@ angular.module('tab-panes', ['util-services'])
 		this.loadTimes();
 	}])
 
+	.controller('TimeLogPaneCtrler', ['$scope', 'StoreItemFactory', function($scope, StoreItemFactory) {
+	}])
+
 	.directive('listPane', function() {
 		return {
 			restrict: 'E',
@@ -127,6 +130,15 @@ angular.module('tab-panes', ['util-services'])
 			templateUrl: 'js/time-pane.html',
 			controller: 'TimePaneCtrler',
 			controllerAs: 'timePane'
+		};
+	})
+
+	.directive('timeLogPane', function() {
+		return {
+			restrict: 'E',
+			templateUrl: 'js/time-log-pane.html',
+			controller: 'TimeLogPaneCtrler',
+			controllerAs: 'timeLogPane'
 		};
 	})
 
