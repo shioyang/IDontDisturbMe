@@ -3,12 +3,14 @@
 		<thead>
 			<th>
 				<td>Blocked URL<td>
+				<td>Date &amp; Time</td>
 			</th>
 		</thead>
-			<tr ng-repeat="urlInfo in TimeLogPane.urlInfos">
-				<td>{{urlInfo.url}}<td>
-			</tr>
 		<tbody>
+			<tr ng-repeat="urlLogInfo in TimeLogPane.urlLogInfos">
+				<td>{{urlLogInfo.url}}</td>
+				<td>{{urlLogInfo.data}} {{urlLogInfo.time}}</td>
+			</tr>
 		</tbody>
 	</table>
 </div>

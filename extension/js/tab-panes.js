@@ -113,6 +113,23 @@ angular.module('tab-panes', ['util-services'])
 	}])
 
 	.controller('TimeLogPaneCtrler', ['$scope', 'StoreItemFactory', function($scope, StoreItemFactory) {
+		var urlLogInfos = [];
+		// urlLogInfos = [
+		// 	{
+		// 		url: "http://sample.com/",
+		// 		date: "",
+		// 		time: ""
+		// 	}
+		// ];
+
+		this.loadUrlLogs = function() {
+		};
+
+		this.saveUrlLogs = function() {
+		};
+
+		// init
+		this.loadUrlLogs();
 	}])
 
 	.directive('listPane', function() {
