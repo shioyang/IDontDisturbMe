@@ -112,9 +112,9 @@ angular.module('tab-panes', ['util-services'])
 		this.loadTimes();
 	}])
 
-	.controller('TimeLogPaneCtrler', ['$scope', 'StoreItemFactory', function($scope, StoreItemFactory) {
-		var urlLogInfos = [];
-		// urlLogInfos = [
+	.controller('BlockedLogPaneCtrler', ['$scope', 'StoreItemFactory', function($scope, StoreItemFactory) {
+		var blockedLogInfos = [];
+		// blockedLogInfos = [
 		// 	{
 		// 		url: "http://sample.com/",
 		// 		date: "",
@@ -122,14 +122,14 @@ angular.module('tab-panes', ['util-services'])
 		// 	}
 		// ];
 
-		this.loadUrlLogs = function() {
+		this.loadBlockedLogs = function() {
 		};
 
-		this.saveUrlLogs = function() {
+		this.saveBlockedLogs = function() {
 		};
 
 		// init
-		this.loadUrlLogs();
+		this.loadBlockedLogs();
 	}])
 
 	.directive('listPane', function() {
@@ -150,12 +150,12 @@ angular.module('tab-panes', ['util-services'])
 		};
 	})
 
-	.directive('timeLogPane', function() {
+	.directive('blockedLogPane', function() {
 		return {
 			restrict: 'E',
-			templateUrl: 'js/time-log-pane.html',
-			controller: 'TimeLogPaneCtrler',
-			controllerAs: 'timeLogPane'
+			templateUrl: 'js/blocked-log-pane.html',
+			controller: 'BlockedLogPaneCtrler',
+			controllerAs: 'blockedLogPane'
 		};
 	})
 

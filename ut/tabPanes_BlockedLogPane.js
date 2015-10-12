@@ -1,4 +1,4 @@
-describe('tab-panes TimeLogPaneCtrler', function() {
+describe('tab-panes BlockedLogPaneCtrler', function() {
 	var $rootScope;
 	var $controller;
 	beforeEach(module('popupApp'));
@@ -13,7 +13,7 @@ describe('tab-panes TimeLogPaneCtrler', function() {
 				// Use "$apply" because angular doesn't know this turn.
 				scope.$apply(function() {
 					var items = {
-						key_logUrlInfos: [
+						key_logBlockedInfos: [
 							{"url":"", "date":"", "time":""},
 							{"url":"", "date":"", "time":""},
 							{"url":"", "date":"", "time":""},
@@ -39,13 +39,13 @@ describe('tab-panes TimeLogPaneCtrler', function() {
 	};
 
 	it('should load time log objects.', function() {
-		var timeLogPaneCtrler = $controller('TimeLogPaneCtrler', { $scope: $rootScope, StoreItemFactory: StoreItemFactoryMock() });
-		timeLogPaneCtrler.loadUrlLogs();
+		var BlockedLogPaneCtrler = $controller('BlockedLogPaneCtrler', { $scope: $rootScope, StoreItemFactory: StoreItemFactoryMock() });
+		BlockedLogPaneCtrler.loadBlockedLogs();
 	});
 
 	it('should save time log objects.', function() {
-		var timeLogPaneCtrler = $controller('TimeLogPaneCtrler', { $scope: $rootScope, StoreItemFactory: StoreItemFactoryMock() });
-		timeLogPaneCtrler.saveUrlLogs();
+		var BlockedLogPaneCtrler = $controller('BlockedLogPaneCtrler', { $scope: $rootScope, StoreItemFactory: StoreItemFactoryMock() });
+		BlockedLogPaneCtrler.saveBlockedLogs();
 	});
 
 });
