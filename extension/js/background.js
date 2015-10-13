@@ -31,7 +31,9 @@
 							var urlInfos = JSON.parse(items[key]);
 							var urls = [];
 							urlInfos.forEach(function(urlInfo, index) {
-								urls.push(formatUrl(urlInfo.url));  // "*://host/*"
+								var formatted = formatUrl(urlInfo.url);  // "*://host/*"
+								urls.push(formatted);  // "*://host/*"
+								urlInfo.formattedUrl = formatted;
 							}, this);
 
 							if (urls.length > 0) {
@@ -41,6 +43,13 @@
 									["blocking"]
 								);
 							}
+
+							var object = {};
+							object[key] = JSON.stringify(urlInfos);
+							chrome.storage.sync.set(object, function() {
+								console.log("saved:");
+								console.log(object);
+							});
 						});
 						break;
 					case "stopTrack":
