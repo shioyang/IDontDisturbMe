@@ -22,3 +22,8 @@ Note: Every time you open Chrome browser, the warning pop-up shows because the e
 1. Click the icon for this extension to open the pop-up window: ![Icon on browser](images/captures/iconOnBrowser.png)
 2. Click the "Stop" button to stop tracking and blocking configured URLs.
 
+## History
+### Time Log
+
+### Blocked Log
+

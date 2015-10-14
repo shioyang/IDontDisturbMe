@@ -18,7 +18,12 @@
 1. ブラウザ上のアイコンをクリックして、ポップアップ画面を開きます： ![Icon on browser](images/captures/iconOnBrowser.png)
 2. "Start" をクリックすると記録を開始します。また、設定された URL へのアクセスをブロックするようになります： ![Start tracking in Time tab](images/captures/TimeTab_starting.png)
 
-### Tracking Stop
+### 記録の終了
 1. ブラウザ上のアイコンをクリックして、ポップアップ画面を開きます： ![Icon on browser](images/captures/iconOnBrowser.png)
 2. "Stop" をクリックすると記録を終了します。また、設定された URL へのアクセスがブロックされなくなります。
+
+## 履歴
+### 時間のログ
+
+### ブロックのログ
 
