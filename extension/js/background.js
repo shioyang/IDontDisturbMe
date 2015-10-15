@@ -9,7 +9,34 @@
 		// A handler to handle BeforeRequest
 		this.requestBlockFunction = function(details) {
 			this.logDebug("Blocked URL: " + details.url);
+			this.incrementBlockedCount(details.url);
 			return {cancel: true};
+		};
+
+		this.incrementBlockedCount = function(blockedUrl) {
+			var key = this.KEY_URL_INFOS;
+			var formatUrl = this.formatUrl;
+			chrome.storage.sync.get(key, function(items) {
+				var urlInfos = JSON.parse(items[key]);
+				var urls = [];
+				var needSave = false;
+				urlInfos.forEach(function(urlInfo, index) {
+					var formattedBlockedUrl = formatUrl(blockedUrl);
+					if (formattedBlockedUrl === urlInfo.formattedUrl) {
+						urlInfo.blocked++; // increment
+						needSave = true;
+					}
+				}, this);
+
+				if (needSave) {
+					var object = {};
+					object[key] = JSON.stringify(urlInfos);
+					chrome.storage.sync.set(object, function() {
+						console.log("saved:");
+						console.log(object);
+					});
+				}
+			});
 		};
 
 		// url: "http://www.google.com/", etc.
@@ -44,6 +71,7 @@
 								);
 							}
 
+							// Save formatted URL
 							var object = {};
 							object[key] = JSON.stringify(urlInfos);
 							chrome.storage.sync.set(object, function() {
