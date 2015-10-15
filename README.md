@@ -24,6 +24,8 @@ Note: Every time you open Chrome browser, the warning pop-up shows because the e
 
 ## History
 ### Time Log
+Log of start time and stop time
 
 ### Blocked Log
+Log of blocked site
 
