@@ -113,24 +113,37 @@ angular.module('tab-panes', ['util-services'])
 	}])
 
 	.controller('BlockedLogPaneCtrler', ['$scope', 'StoreItemFactory', function($scope, StoreItemFactory) {
-		var blockedLogInfos = [];
+		this.KEY_BLOCKED_LOG = "key_blockedLog";
+
+//		var blockedLogInfos = [];
 		// blockedLogInfos = [
 		// 	{
 		// 		url: "http://sample.com/",
-		// 		date: "",
-		// 		time: ""
+		// 		formattedUrl: "*://sample.com/*",
+		// 		time: "2015-5-16 02:12:55"
 		// 	}
 		// ];
+		var blockedLogInfos = [
+		 	{
+		 		url: "http://sample.com/",
+		 		formattedUrl: "*://sample.com/*",
+		 		time: "2015-5-16 02:12:55"
+		 	}
+		 ];
 
 		this.loadBlockedLogs = function() {
-		};
-
-		this.saveBlockedLogs = function() {
+//			StoreItemFactory.loadItem([this.KEY_BLOCKED_LOG], ["blockedLogInfos"], [], $scope, this);
 		};
 
 		// init
 		this.loadBlockedLogs();
 	}])
+
+	.filter('reverse', function() {
+		return function(items) {
+			return items.slice().reverse();
+		};
+	})
 
 	.directive('listPane', function() {
 		return {

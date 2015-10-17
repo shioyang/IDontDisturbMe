@@ -7,9 +7,9 @@
 			</th>
 		</thead>
 		<tbody>
-			<tr ng-repeat="blockedLogInfo in BlockedLogPane.blockedLogInfos">
-				<td>{{blockedLogInfo.url}}</td>
-				<td>{{blockedLogInfo.data}} {{blockedLogInfo.time}}</td>
+			<tr ng-repeat="info in blockedLogPane.blockedLogInfos | reverse">
+				<td>{{info.url}}</td>
+				<td>{{info.time}}</td>
 			</tr>
 		</tbody>
 	</table>

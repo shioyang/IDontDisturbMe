@@ -5,6 +5,12 @@
 		};
 
 		this.KEY_URL_INFOS = "key_urlInfos";
+		this.KEY_BLOCKED_LOG = "key_blockedLog";
+
+		this.getTimeString = function() {
+			var d = new Date();
+			return d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate() + " " + d.toLocaleTimeString();
+		},
 
 		// A handler to handle BeforeRequest
 		this.requestBlockFunction = function(details) {
@@ -15,15 +21,25 @@
 
 		this.incrementBlockedCount = function(blockedUrl) {
 			var key = this.KEY_URL_INFOS;
+			var log_key = this.KEY_BLOCKED_LOG;
 			var formatUrl = this.formatUrl;
-			chrome.storage.sync.get(key, function(items) {
+			var time = this.getTimeString();
+			chrome.storage.sync.get([key, log_key], function(items) {
 				var urlInfos = JSON.parse(items[key]);
 				var urls = [];
 				var needSave = false;
+
+				var blockedLogInfos = JSON.parse(items[log_key] || "null") || [];
+
 				urlInfos.forEach(function(urlInfo, index) {
 					var formattedBlockedUrl = formatUrl(blockedUrl);
 					if (formattedBlockedUrl === urlInfo.formattedUrl) {
 						urlInfo.blocked++; // increment
+						blockedLogInfos.push({
+							url: urlInfo.url,
+							formattedUrl: urlInfo.formattedUrl,
+							time: time
+						});
 						needSave = true;
 					}
 				}, this);
@@ -31,6 +47,7 @@
 				if (needSave) {
 					var object = {};
 					object[key] = JSON.stringify(urlInfos);
+					object[log_key] = JSON.stringify(blockedLogInfos);
 					chrome.storage.sync.set(object, function() {
 						console.log("saved:");
 						console.log(object);
@@ -39,8 +56,8 @@
 			});
 		};
 
-		// url: "http://www.google.com/", etc.
-		//  ->> "*://www.google.com/*", etc.
+		// url: "http://www.google.com/", "http://www.aaa.bbb/CCC/DDD?a=b&p=q", etc.
+		//  ->> "*://www.google.com/*", "*://www.aaa.bbb/*", etc.
 		this.formatUrl = function(url) {
 			var re = /^https?:\/\/([\w.]+)\/.*/;
 			return url.replace(re, "*://$1/*");

@@ -43,10 +43,5 @@ describe('tab-panes BlockedLogPaneCtrler', function() {
 		BlockedLogPaneCtrler.loadBlockedLogs();
 	});
 
-	it('should save time log objects.', function() {
-		var BlockedLogPaneCtrler = $controller('BlockedLogPaneCtrler', { $scope: $rootScope, StoreItemFactory: StoreItemFactoryMock() });
-		BlockedLogPaneCtrler.saveBlockedLogs();
-	});
-
 });
 
