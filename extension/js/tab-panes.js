@@ -115,7 +115,7 @@ angular.module('tab-panes', ['util-services'])
 	.controller('BlockedLogPaneCtrler', ['$scope', 'StoreItemFactory', function($scope, StoreItemFactory) {
 		this.KEY_BLOCKED_LOG = "key_blockedLog";
 
-//		var blockedLogInfos = [];
+		this.blockedLogInfos = [];
 		// blockedLogInfos = [
 		// 	{
 		// 		url: "http://sample.com/",
@@ -123,16 +123,9 @@ angular.module('tab-panes', ['util-services'])
 		// 		time: "2015-5-16 02:12:55"
 		// 	}
 		// ];
-		var blockedLogInfos = [
-		 	{
-		 		url: "http://sample.com/",
-		 		formattedUrl: "*://sample.com/*",
-		 		time: "2015-5-16 02:12:55"
-		 	}
-		 ];
 
 		this.loadBlockedLogs = function() {
-//			StoreItemFactory.loadItem([this.KEY_BLOCKED_LOG], ["blockedLogInfos"], [], $scope, this);
+			StoreItemFactory.loadItem([this.KEY_BLOCKED_LOG], ["blockedLogInfos"], [], $scope, this);
 		};
 
 		// init
