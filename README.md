@@ -28,4 +28,5 @@ History of start time and stop time
 
 ### Blocked History
 History of blocked site
+![Blocked Log Tab](images/captures/BlockedLogTab.png)
 

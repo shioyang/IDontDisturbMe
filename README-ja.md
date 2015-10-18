@@ -28,4 +28,5 @@
 
 ### ブロック履歴
 ブロックされたサイトの履歴
+![Blocked Log Tab](images/captures/BlockedLogTab.png)
 
