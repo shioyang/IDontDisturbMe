@@ -23,9 +23,9 @@ Note: Every time you open Chrome browser, the warning pop-up shows because the e
 2. Click the "Stop" button to stop tracking and blocking configured URLs.
 
 ## History
-### Time Log
-Log of start time and stop time
+### Time History
+History of start time and stop time
 
-### Blocked Log
-Log of blocked site
+### Blocked History
+History of blocked site
 
