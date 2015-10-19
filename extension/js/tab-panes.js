@@ -65,11 +65,25 @@ angular.module('tab-panes', ['util-services'])
 				["startTime", "stopTime", "diffTime"], { hours: "--", minutes: "--" }, $scope, this);
 		};
 
-		this.saveTimes = function() {
+		this.saveTimes = function(isSaveLog) {
 			StoreItemFactory.saveItem(
 				[this.KEY_START_TIME, this.KEY_STOP_TIME, this.KEY_DIFF_TIME],
 				[angular.toJson(this.startTime), angular.toJson(this.stopTime), angular.toJson(this.diffTime)]
 			);
+
+			if (isSaveLog) {
+				var KEY_TIME_LOG = "key_timeLog";
+				this.timeLogInfos = [];
+				var t = this;
+				StoreItemFactory.loadItem([KEY_TIME_LOG], ["timeLogInfos"], [], $scope, this, function() {
+					t.timeLogInfos.push({
+						startTime: t.startTime,
+						stopTime: t.stopTime,
+						diffTime: t.diffTime
+					});
+					StoreItemFactory.saveItem([KEY_TIME_LOG], [angular.toJson(t.timeLogInfos)]);
+				});
+			}
 		};
 
 		this.resetTimes = function() {
@@ -100,7 +114,7 @@ angular.module('tab-panes', ['util-services'])
 
 			this.stopTime = this.getTime();
 			this.updateDiffTime();
-			this.saveTimes();
+			this.saveTimes(true);
 		};
 		
 		this.updateDiffTime = function() {
@@ -115,24 +129,17 @@ angular.module('tab-panes', ['util-services'])
 	.controller('TimeLogPaneCtrler', ['$scope', 'StoreItemFactory', function($scope, StoreItemFactory) {
 		this.KEY_TIME_LOG = "key_timeLog";
 
-//		this.timeLogInfos = [];
+		this.timeLogInfos = [];
 		// timeLogInfos = [
 		// 	{
-		// 		url: "http://sample.com/",
-		// 		formattedUrl: "*://sample.com/*",
-		// 		time: "2015-5-16 02:12:55"
+		// 		startTime: { hours: "2", minutes: "0" },
+		// 		stopTime:  { hours: "2", minutes: "30" },
+		// 		diffTime:  { hours: "0", minutes: "30" }
 		// 	}
 		// ];
-		this.timeLogInfos = [
-			{
-				startTime: "01:00",
-				endTime:   "03:00",
-				diffTime:  "02:00"
-			}
-		];
 
 		this.loadTimeLogs = function() {
-//			StoreItemFactory.loadItem([this.KEY_BLOCKED_LOG], ["blockedLogInfos"], [], $scope, this);
+			StoreItemFactory.loadItem([this.KEY_TIME_LOG], ["timeLogInfos"], [], $scope, this);
 		};
 
 		// init

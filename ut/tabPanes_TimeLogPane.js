@@ -7,15 +7,32 @@ describe('tab-panes TimeLogPaneCtrler', function() {
 		$controller = _$controller_;
 	}));
 
-	var MOCK_INFO_0_START_TIME = "00:00";
-	var MOCK_INFO_1_START_TIME = "00:00";
-	var MOCK_INFO_2_START_TIME = "00:00";
-	var MOCK_INFO_0_END_TIME   = "03:00";
-	var MOCK_INFO_1_END_TIME   = "03:00";
-	var MOCK_INFO_2_END_TIME   = "03:00";
-	var MOCK_INFO_0_DIFF_TIME  = "01:00";
-	var MOCK_INFO_1_DIFF_TIME  = "01:00";
-	var MOCK_INFO_2_DIFF_TIME  = "01:00";
+	var MOCK_INFO_0_START_HOURS = "02";
+	var MOCK_INFO_0_START_MINS = "00";
+
+	var MOCK_INFO_1_START_HOURS = "02";
+	var MOCK_INFO_1_START_MINS = "00";
+
+	var MOCK_INFO_2_START_HOURS = "02";
+	var MOCK_INFO_2_START_MINS = "00";
+
+	var MOCK_INFO_0_STOP_HOURS   = "03";
+	var MOCK_INFO_0_STOP_MINS   = "00";
+
+	var MOCK_INFO_1_STOP_HOURS   = "03";
+	var MOCK_INFO_1_STOP_MINS   = "30";
+
+	var MOCK_INFO_2_STOP_HOURS   = "04";
+	var MOCK_INFO_2_STOP_MINS   = "00";
+
+	var MOCK_INFO_0_DIFF_HOURS  = "01";
+	var MOCK_INFO_0_DIFF_MINS  = "00";
+
+	var MOCK_INFO_1_DIFF_HOURS  = "01";
+	var MOCK_INFO_1_DIFF_MINS  = "30";
+
+	var MOCK_INFO_2_DIFF_HOURS  = "02";
+	var MOCK_INFO_2_DIFF_MINS  = "00";
 
 	function StoreItemFactoryMock() {
 		return {
@@ -23,10 +40,21 @@ describe('tab-panes TimeLogPaneCtrler', function() {
 				// Use "$apply" because angular doesn't know this turn.
 				scope.$apply(function() {
 					var items = {
-						"key_TimeLog": [
-							{"startTime":MOCK_INFO_0_START_TIME, "endTime":MOCK_INFO_0_END_TIME, "diffTime":MOCK_INFO_0_DIFF_TIME },
-							{"startTime":MOCK_INFO_1_START_TIME, "endTime":MOCK_INFO_1_END_TIME, "diffTime":MOCK_INFO_1_DIFF_TIME },
-							{"startTime":MOCK_INFO_2_START_TIME, "endTime":MOCK_INFO_2_END_TIME, "diffTime":MOCK_INFO_2_DIFF_TIME }
+						"key_timeLog": [
+							{
+								"startTime":{"hours":MOCK_INFO_0_START_HOURS,"minutes":MOCK_INFO_0_START_MINS},
+								"stopTime": {"hours":MOCK_INFO_0_STOP_HOURS, "minutes":MOCK_INFO_0_STOP_MINS},
+								"diffTime": {"hours":MOCK_INFO_0_DIFF_HOURS, "minutes":MOCK_INFO_0_DIFF_MINS}
+							},
+							{
+								"startTime":{"hours":MOCK_INFO_1_START_HOURS,"minutes":MOCK_INFO_1_START_MINS},
+								"stopTime": {"hours":MOCK_INFO_1_STOP_HOURS, "minutes":MOCK_INFO_1_STOP_MINS},
+								"diffTime": {"hours":MOCK_INFO_1_DIFF_HOURS, "minutes":MOCK_INFO_1_DIFF_MINS}},
+							{
+								"startTime":{"hours":MOCK_INFO_2_START_HOURS,"minutes":MOCK_INFO_2_START_MINS},
+								"stopTime": {"hours":MOCK_INFO_2_STOP_HOURS, "minutes":MOCK_INFO_2_STOP_MINS},
+								"diffTime": {"hours":MOCK_INFO_2_DIFF_HOURS, "minutes":MOCK_INFO_2_DIFF_MINS}
+							}
 						]
 					};
 					angular.forEach(items, function(item, key) {
@@ -48,10 +76,12 @@ describe('tab-panes TimeLogPaneCtrler', function() {
 
 	it('should load time log objects.', function() {
 		var TimeLogPaneCtrler = $controller('TimeLogPaneCtrler', { $scope: $rootScope, StoreItemFactory: StoreItemFactoryMock() });
-//		TimeLogPaneCtrler.loadTimeLogs();
-//		expect( TimeLogPaneCtrler.timeLogInfos[0].startTime ).toEqual( MOCK_INFO_0_START_TIME           );
-//		expect( TimeLogPaneCtrler.timeLogInfos[1].endTime   ).toEqual( MOCK_INFO_1_END_TIME );
-//		expect( TimeLogPaneCtrler.timeLogInfos[2].diffTime  ).toEqual( MOCK_INFO_2_DIFF_TIME          );
+		TimeLogPaneCtrler.loadTimeLogs();
+		expect( TimeLogPaneCtrler.timeLogInfos[0].startTime.hours  ).toEqual( MOCK_INFO_0_START_HOURS );
+		expect( TimeLogPaneCtrler.timeLogInfos[1].stopTime.minutes ).toEqual( MOCK_INFO_1_STOP_MINS   );
+
+		expect( TimeLogPaneCtrler.timeLogInfos[2].diffTime.hours   ).toEqual( MOCK_INFO_2_DIFF_HOURS );
+		expect( TimeLogPaneCtrler.timeLogInfos[2].diffTime.minutes ).toEqual( MOCK_INFO_2_DIFF_MINS  );
 	});
 
 });
