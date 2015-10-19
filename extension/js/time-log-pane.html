@@ -1,0 +1,19 @@
+<div>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Start</th>
+				<th>End</th>
+				<th>Diff</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="info in timeLogPane.timeLogInfos | reverse">
+				<td>{{info.startTime}}</td>
+				<td>{{info.endTime}}</td>
+				<td>{{info.diffTime}}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+

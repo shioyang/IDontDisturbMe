@@ -112,6 +112,33 @@ angular.module('tab-panes', ['util-services'])
 		this.loadTimes();
 	}])
 
+	.controller('TimeLogPaneCtrler', ['$scope', 'StoreItemFactory', function($scope, StoreItemFactory) {
+		this.KEY_TIME_LOG = "key_timeLog";
+
+//		this.timeLogInfos = [];
+		// timeLogInfos = [
+		// 	{
+		// 		url: "http://sample.com/",
+		// 		formattedUrl: "*://sample.com/*",
+		// 		time: "2015-5-16 02:12:55"
+		// 	}
+		// ];
+		this.timeLogInfos = [
+			{
+				startTime: "01:00",
+				endTime:   "03:00",
+				diffTime:  "02:00"
+			}
+		];
+
+		this.loadTimeLogs = function() {
+//			StoreItemFactory.loadItem([this.KEY_BLOCKED_LOG], ["blockedLogInfos"], [], $scope, this);
+		};
+
+		// init
+		this.loadTimeLogs();
+	}])
+
 	.controller('BlockedLogPaneCtrler', ['$scope', 'StoreItemFactory', function($scope, StoreItemFactory) {
 		this.KEY_BLOCKED_LOG = "key_blockedLog";
 
@@ -153,6 +180,15 @@ angular.module('tab-panes', ['util-services'])
 			templateUrl: 'js/time-pane.html',
 			controller: 'TimePaneCtrler',
 			controllerAs: 'timePane'
+		};
+	})
+
+	.directive('timeLogPane', function() {
+		return {
+			restrict: 'E',
+			templateUrl: 'js/time-log-pane.html',
+			controller: 'TimeLogPaneCtrler',
+			controllerAs: 'timeLogPane'
 		};
 	})
 
