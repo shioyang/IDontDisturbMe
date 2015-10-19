@@ -25,6 +25,7 @@ Note: Every time you open Chrome browser, the warning pop-up shows because the e
 ## History
 ### Time History
 History of start time and stop time
+![Blocked Log Tab](images/captures/TimeLogTab.png)
 
 ### Blocked History
 History of blocked site

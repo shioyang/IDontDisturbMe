@@ -25,6 +25,7 @@
 ## 履歴
 ### 時間記録の履歴
 開始時刻と終了時刻の履歴
+![Blocked Log Tab](images/captures/TimeLogTab.png)
 
 ### ブロック履歴
 ブロックされたサイトの履歴
