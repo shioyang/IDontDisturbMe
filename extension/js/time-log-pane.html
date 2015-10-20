@@ -9,9 +9,9 @@
 		</thead>
 		<tbody>
 			<tr ng-repeat="info in timeLogPane.timeLogInfos | reverse">
-				<td>{{info.startTime.hours}}:{{info.startTime.minutes}}</td>
-				<td>{{info.stopTime.hours}}:{{info.stopTime.minutes}}</td>
-				<td>{{info.diffTime.hours}}:{{info.diffTime.minutes}}</td>
+				<td>{{info.startTime.hours | addZero}}:{{info.startTime.minutes | addZero}}</td>
+				<td>{{info.stopTime.hours | addZero}}:{{info.stopTime.minutes | addZero}}</td>
+				<td>{{info.diffTime.hours | addZero}}:{{info.diffTime.minutes | addZero}}</td>
 			</tr>
 		</tbody>
 	</table>

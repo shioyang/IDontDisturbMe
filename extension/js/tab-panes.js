@@ -172,6 +172,13 @@ angular.module('tab-panes', ['util-services'])
 		};
 	})
 
+	.filter('addZero', function() {
+		return function(time) {
+			var timeStr = "" + time;
+			return (angular.isString(timeStr) && timeStr.length === 1) ? ("0" + timeStr) : timeStr;
+		};
+	})
+
 	.directive('listPane', function() {
 		return {
 			restrict: 'E',
