@@ -19,18 +19,7 @@
 		"default_title": "I Don't Disturb Me",
 		"default_popup": "popup.html"
 	},
-	"content_scripts": [
-		{
-			"matches": [
-				"http://*/*",
-				"https://*/*"
-			],
-			"css": [],
-			"js": ["js/content_scripts/common.js"]
-		}
-	],
 	"permissions": [
-		"tabs",
 		"storage",
 		"webRequest",
 		"webRequestBlocking",
